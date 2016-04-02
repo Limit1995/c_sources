@@ -1,16 +1,1 @@
-8
-asdf
-asdf
-asdf;l'k;sdkf':
-8
-a
-s
-d
-f
-main
-:
-
-a
-s
-d
-8
+creat test
