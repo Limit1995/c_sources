@@ -1,32 +1,28 @@
+//求e的x次方，精确到0.0001
+//2016.4.25
 #include<stdio.h>
 #include<math.h>
+#define ACCURACY 0.0001
 
 int main()
 {
-	double sinx,quot,x,j,fac;
+	double ex,quot,x,fac;
 	int i;
-
-	j=1;
-	i=1;
-	fac=1;
-	sinx=0;
-	scanf("%lf",&x);
 	
+	printf("please enter x:");
+	scanf("%lf",&x);
+	fac=1;
+	ex=1;
+	quot=1;
 
-	while(i<100)
+	for(i=1;quot>=ACCURACY;i++)
 	{
 		fac=fac*i;
-		if(i%2!=0)
-		{
-			quot=(pow(x,i))/fac;
-			sinx=sinx+(j*quot);
-			j=-j;
-		}
-
-		i++;
+		quot=(pow(x,i))/fac;
+		ex=ex+quot;
 	}
 
-	printf("%lf\n",sinx);
-	
+	printf("e的%lf次方为%.4lf\n",x,ex);
+
 	return 0;
 }
