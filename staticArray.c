@@ -1,4 +1,8 @@
+//´íÎó³ÌĞò
+
 #include<stdio.h>
+
+
 
 int main(  )
 {
