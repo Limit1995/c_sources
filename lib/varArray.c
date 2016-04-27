@@ -4,25 +4,32 @@
 //  typedef struct
 //  {
 //      int size;
-//      int * varArr;
+//      double * varArr;
 //  }varray;
 
 varray varArray_cre( int init_size )
 {
     varray a;
     a.size = init_size;
-    a.varArr = malloc(sizeof(int)*init_size);
-    
+    a.varArr = malloc(sizeof( double ) * init_size);
     return a;
 }
 
-int varArray_get( varray * a, int index )
+double varArray_get( varray * a, int index )
 {
-    return a->varArr[ index ];
+    if( index < a->size )
+	return a->varArr[ index ];
+    else
+	return -1 ;
 }
 
-void varArray_assign( varray * a, int index , int number  )
+void varArray_assign( varray * a, int index , double number  )
 {
+    int block = 20 ;
+    int larger ; 
+    larger = ( index/block +1 ) * block ;
+    if( index >= a->size )
+	varArray_inflate( a, larger );
     a->varArr[ index ] = number;
 }
 
@@ -31,18 +38,17 @@ int varArray_size( varray * a )
     return a->size;
 }
     
-void varArray_inflate( varray *a , int more_size )
+void varArray_inflate( varray *a , int larger )
 {
     int i;
-    int *p =malloc( sizeof( a->size+more_size ) );
-    for (i = 0; i<a->size; i++)
-    {
+    double *p =malloc( sizeof( double ) * ( a->size + larger ) );
+    for ( i = 0 ; i < a->size ; i++ )
 	p[ i ] = varArray_get( a,i );
-    }
-    free( a );
-    a->varArr=p;
-    a->size=a->size + more_size;
+    free( a->varArr );
+    a->varArr = p;
+    a->size = a->size + larger ; 
 }
+
 void varArray_free( varray *a )
 {
     free( a->varArr );
@@ -53,16 +59,23 @@ void varArray_free( varray *a )
 
 int main(  )
 {
-    int i;
-    varray a;
-    a = varArray_cre ( 4 );
-    for (i = 0; i<varArray_size( &a ); i++)
+    int i=0;
+    double tem=0;
+    varray table;
+
+    table = varArray_cre ( 10 );
+
+    while( tem != -1 )
     {
-	varArray_assign( &a,i,i );
+	scanf( "%lf",&tem );
+	varArray_assign( &table , i , tem );
+	i++;
     }
 
-    for( i=0;i<varArray_size( &a );i++ )
-	printf("%d\n", varArray_get( &a,i ));
+    for( i=0 ; i < varArray_size ( &table ) ; i++ )
+	printf("%lf\n", varArray_get( &table ,i ) );
+
+    varArray_free ( &table );
     
     return 0;
 }
