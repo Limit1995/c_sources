@@ -3,10 +3,10 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 
-/*******************************Child1 Process Function*******************************/
+/***************************Child1 Process Function***************************/
 void child1Fun()
 {
-	int i=6,child1Cnt=0;
+	int i=3,child1Cnt=0;
 	printf("Hello from child1 pid = %d\n", getpid());
 	while(i--)
 	{
@@ -16,10 +16,10 @@ void child1Fun()
 	exit(EXIT_SUCCESS);
 }
 
-/*******************************Child2 Process Function*******************************/
+/***************************Child2 Process Function***************************/
 void child2Fun()
 {
-	int i=4,child2Cnt=0;
+	int i=3,child2Cnt=0;
 	printf("Hello from child2 pid = %d\n", getpid());
 	while(i--)
 	{
@@ -29,10 +29,10 @@ void child2Fun()
 	exit(EXIT_SUCCESS);
 }
 
-/*******************************Child3 Process Function*******************************/
+/***************************Child3 Process Function***************************/
 void child3Fun()
 {
-	int i=5,child3Cnt=0;
+	int i=3,child3Cnt=0;
 	printf("Hello from child3 pid = %d\n", getpid());
 	while(i--)
 	{
@@ -45,7 +45,7 @@ void child3Fun()
 void main(void)
 {
 	pid_t childPid1, childPid2, childPid3;
-	int i=4,parentCnt=0;
+	int i=3,parentCnt=0;
 
 /*******************************Child1 Process*******************************/
 	childPid1 = fork();
