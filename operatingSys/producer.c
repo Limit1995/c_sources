@@ -64,10 +64,8 @@ int main()
 	key = ftok("./producer.c",0);
 	shm_id = shmget(key,SIZE,IPC_CREAT|0666);
 	shm_buff = (char *)shmat(shm_id,NULL,0);
-	perror("shmat");
 	mystruct *share = (mystruct *)shm_buff;
 
-	printf("key=%d, shm_id=%d , share=%d \n",key,shm_id,share);
 /***********************参数初始化***********************/
 	init(share);
 

@@ -29,7 +29,7 @@ consume(mystruct *share)
 
 	while(1)
 	{
-		sleep(2);
+		sleep(1);
 		if(share->producerPtr==share->customerPtr)
 			printf("The pool is empty! >> from pid=%d\n",getpid());
 
@@ -55,15 +55,22 @@ int main()
 	char * shm_buff;
 	pid_t pid;
 
+/***********************共享内存初始化***********************/
+	key = ftok("./producer.c",0);
+	shm_id = shmget(key,SIZE,IPC_CREAT|0666);
+	shm_buff = (char *)shmat(shm_id,NULL,0);
+	mystruct *share = (mystruct *)shm_buff;
+	printf("share=%d \n",share);
+
 	pid = fork();
 	if(0==pid)                    //消费者并发进程之一
 	{
-/***********************共享内存初始化***********************/
+/***********************共享内存初始化**********************
 		key = ftok("./producer.c",0);
 		shm_id = shmget(key,SIZE,IPC_CREAT|0666);
 		shm_buff = (char *)shmat(shm_id,NULL,0);
 		mystruct *share = (mystruct *)shm_buff;
-		printf("pid=%d\n",getpid());
+		printf("share=%d \n",share);*/
 /***********************读取缓冲池数据并清空***********************/
 		consume(share);
 		exit(EXIT_SUCCESS);
@@ -71,13 +78,13 @@ int main()
 
 	else                         //消费者并发进程之一
 	{
-/***********************共享内存初始化***********************/
+/***********************共享内存初始化**********************
 		key = ftok("./producer.c",0);
 		shm_id = shmget(key,SIZE,IPC_CREAT);
 		shm_buff = (char *)shmat(shm_id,NULL,0);
 		mystruct *share = (mystruct *)shm_buff;
+		printf("share=%d \n",share);*/
 
-		printf("pid=%d\n",getpid());
 /***********************读取缓冲池数据并清空***********************/
 		consume(share);
 		waitpid(pid,NULL,0);
