@@ -37,19 +37,19 @@ produce(mystruct * share)
 	char str[BOXSIZE];
 	while(1)
 	{
-		scanf("%[^\n]", str);
+		scanf("%[^\n]", str);//输入一整行数据
 		getchar();
 		if(share->producerPtr==POOLSIZE+share->customerPtr)
 			printf("The pool is full!\n");
 
 		sem_wait(&share->emptyBox);
-		pthread_mutex_lock(&share->mux);
+		pthread_mutex_lock(&share->mux);//上锁
 
-		index=share->producerPtr%POOLSIZE;
-		strcpy(share->pool[index] , str);
+		index=share->producerPtr%POOLSIZE;//计算生产者在缓冲池的位置
+		strcpy(share->pool[index] , str);//把读到的数据写入缓冲池 
 		share->producerPtr++;
 
-		pthread_mutex_unlock(&share->mux);
+		pthread_mutex_unlock(&share->mux);//开锁
 		sem_post(&share->fullBox);
 		
 	}
